@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import pt.pa.model.Laptop;
+import pt.pa.model.Review;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -76,31 +77,50 @@ public class LaptopsGui extends BorderPane {
 
 
         setCenter(mainContent);
-        Text h1Text = new Text("");
-        Text text = new Text();
-        h1Text.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        text.setWrappingWidth(550);
 
-        mainContent.getChildren().addAll(h1Text, text);
+        Text h1Text = new Text();
+        Text text = new Text();
+        Text review = new Text();
+
+        h1Text.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        text.setWrappingWidth(550);
+        review.setWrappingWidth(550);
+
+        mainContent.getChildren().addAll(h1Text, text, review);
 
 
         //Add select item function
         listViewLaptops.setOnMouseClicked(event -> {
-
             Laptop selectedLaptop = listViewLaptops.getSelectionModel().getSelectedItem();
+
             String displayName = selectedLaptop.getDisplayName();
             String releaseDate = selectedLaptop.getReleaseDate();
             String cpu = selectedLaptop.getCpu();
             String ram = selectedLaptop.getRam();
             String ssd = selectedLaptop.getSsd();
 
+
             h1Text.setText("Laptop Information");
+
             text.setText("Display Name: " + displayName +
                     "  Release Date: " + releaseDate +
                     "  Cpu: " + cpu +
                     "  Ram: " + ram +
                     "  Ssd: " + ssd);
+
+            review.setText("Reviews: ");
+
+            StringBuilder reviewString = new StringBuilder();
+
+            reviewString.append("Reviews: ").append("\n");
+            for(Review r :  selectedLaptop.getReviews()) {
+                reviewString.append("\n").append("User: ").append(r.getUserName()).append("     Rating: ").append(r.getRating()).append("\n").append("Comment: ").append(r.getComment()).append("\n\n");
+            }
+
+            review.setText(reviewString.toString());
         });
+
 
     }
 
