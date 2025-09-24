@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import pt.pa.model.Laptop;
 
 import java.io.FileInputStream;
@@ -75,6 +76,32 @@ public class LaptopsGui extends BorderPane {
 
 
         setCenter(mainContent);
+        Text h1Text = new Text("");
+        Text text = new Text();
+        h1Text.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        text.setWrappingWidth(550);
+
+        mainContent.getChildren().addAll(h1Text, text);
+
+
+        //Add select item function
+        listViewLaptops.setOnMouseClicked(event -> {
+
+            Laptop selectedLaptop = listViewLaptops.getSelectionModel().getSelectedItem();
+            String displayName = selectedLaptop.getDisplayName();
+            String releaseDate = selectedLaptop.getReleaseDate();
+            String cpu = selectedLaptop.getCpu();
+            String ram = selectedLaptop.getRam();
+            String ssd = selectedLaptop.getSsd();
+
+            h1Text.setText("Laptop Information");
+            text.setText("Display Name: " + displayName +
+                    "  Release Date: " + releaseDate +
+                    "  Cpu: " + cpu +
+                    "  Ram: " + ram +
+                    "  Ssd: " + ssd);
+        });
+
     }
 
     /**
